@@ -13,62 +13,67 @@
                     <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                         <li class="nav-item">
                             <a class="nav-link active" aria-current="page" href="/home">Home</a>
+
                         </li>
+                        <a class="nav-link " href="/products" >
+                            Products
+                        </a>
+
                         <!--                    <li class="nav-item">-->
                         <!--                        <a class="nav-link" href="/products"></a>-->
                         <!--                    </li>-->
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" href="/products" id="navbarDropdown" role="button"
-                               data-bs-toggle="dropdown" aria-expanded="false">
-                                Products
-                            </a>
-                            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                <li><a class="dropdown-item" href="/products/all">ALL PRODUCTS</a></li>
-                                <li>
-                                    <hr class="dropdown-divider">
-                                </li>
-                                <li><a class="dropdown-item" href="/products/top">TOP</a>
-                                    <ul>
-                                        <li th:each="top : ${tops}">
-                                            <a class="dropdown-item" th:text="${top.name}"
-                                               th:href="@{'/products/'+${top.name}}"></a></li>
-                                    </ul>
-                                </li>
-                                <li>
-                                    <hr class="dropdown-divider">
-                                </li>
-                                <li><a class="dropdown-item" href="/products/bottom">BOTTOM</a>
-                                    <ul>
-                                        <li th:each="bottom : ${bottoms}">
-                                            <a class="dropdown-item" th:text="${bottom.name}"
-                                               th:href="@{'/products/'+${bottom.name}}"></a>
-                                        </li>
-                                    </ul>
-                                </li>
-                                <li>
-                                    <hr class="dropdown-divider">
-                                </li>
-                                <li><a class="dropdown-item" href="/products/accessories">ACCESSORIES</a>
-                                    <ul>
-                                        <li th:each="acc : ${accessories}">
-                                            <a class="dropdown-item" th:text="${acc.name}"
-                                               th:href="@{'/products/'+${acc.name}}"></a>
-                                        </li>
-                                    </ul>
-                                </li>
-                                <li>
-                                    <hr class="dropdown-divider">
-                                </li>
-                                <li><a class="dropdown-item" href="/products/collections">COLLECTIONS</a>
-                                    <ul>
-                                        <li th:each="coll : ${collections}">
-                                            <a class="dropdown-item" th:text="${coll.name}"
-                                               th:href="@{'/products/'+${coll.name}}"></a>
-                                        </li>
-                                    </ul>
-                                </li>
-                            </ul>
-                        </li>
+<!--                        <li class="nav-item dropdown">-->
+<!--                            <a class="nav-link dropdown-toggle" href="/products" id="navbarDropdown" role="button"-->
+<!--                               data-bs-toggle="dropdown" aria-expanded="false">-->
+<!--                                Products-->
+<!--                            </a>-->
+<!--                            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">-->
+<!--                                <li><a class="dropdown-item" href="/products/all">ALL PRODUCTS</a></li>-->
+<!--                                <li>-->
+<!--                                    <hr class="dropdown-divider">-->
+<!--                                </li>-->
+<!--                                <li><a class="dropdown-item" href="/products/top">TOP</a>-->
+<!--                                    <ul>-->
+<!--                                        <li th:each="top : ${tops}">-->
+<!--                                            <a class="dropdown-item" th:text="${top.name}"-->
+<!--                                               th:href="@{'/products/'+${top.name}}"></a></li>-->
+<!--                                    </ul>-->
+<!--                                </li>-->
+<!--                                <li>-->
+<!--                                    <hr class="dropdown-divider">-->
+<!--                                </li>-->
+<!--                                <li><a class="dropdown-item" href="/products/bottom">BOTTOM</a>-->
+<!--                                    <ul>-->
+<!--                                        <li th:each="bottom : ${bottoms}">-->
+<!--                                            <a class="dropdown-item" th:text="${bottom.name}"-->
+<!--                                               th:href="@{'/products/'+${bottom.name}}"></a>-->
+<!--                                        </li>-->
+<!--                                    </ul>-->
+<!--                                </li>-->
+<!--                                <li>-->
+<!--                                    <hr class="dropdown-divider">-->
+<!--                                </li>-->
+<!--                                <li><a class="dropdown-item" href="/products/accessories">ACCESSORIES</a>-->
+<!--                                    <ul>-->
+<!--                                        <li th:each="acc : ${accessories}">-->
+<!--                                            <a class="dropdown-item" th:text="${acc.name}"-->
+<!--                                               th:href="@{'/products/'+${acc.name}}"></a>-->
+<!--                                        </li>-->
+<!--                                    </ul>-->
+<!--                                </li>-->
+<!--                                <li>-->
+<!--                                    <hr class="dropdown-divider">-->
+<!--                                </li>-->
+<!--                                <li><a class="dropdown-item" href="/products/collections">COLLECTIONS</a>-->
+<!--                                    <ul>-->
+<!--                                        <li th:each="coll : ${collections}">-->
+<!--                                            <a class="dropdown-item" th:text="${coll.name}"-->
+<!--                                               th:href="@{'/products/'+${coll.name}}"></a>-->
+<!--                                        </li>-->
+<!--                                    </ul>-->
+<!--                                </li>-->
+<!--                            </ul>-->
+<!--                        </li>-->
                         <li sec:authorize="${hasRole('ROLE_ADMIN')}" class="nav-item">
                             <a class="nav-link" href="/categories">Categories</a>
                         </li>

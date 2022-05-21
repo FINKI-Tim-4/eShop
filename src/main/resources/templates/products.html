@@ -14,12 +14,13 @@
                         th:selected="${sort.value == sorting}"></option>
             </select>
             <input class="inputValue" hidden th:value="${state}" name="state">
-            <button>Sort</button>
+            <button class="btn btn-primary">Sort</button>
         </form>
     </div>
-    <div class="container">
-        <button id="btnlist" onclick="changeView('list')">View as list</button>
-        <button id="btngrid" onclick="changeView('grid')" style="display: none">View as grid</button>
+    <div class="container mb-3">
+        <button id="btnlist" onclick="changeView('list')" class="btn btn-primary">View as list</button>
+        <button id="btngrid" onclick="changeView('grid')" style="display: none" class="btn btn-primary">View as grid
+        </button>
     </div>
     <div class="album py-5 bg-light" style="display: none" id="grid">
         <div class="container bg-dark">
