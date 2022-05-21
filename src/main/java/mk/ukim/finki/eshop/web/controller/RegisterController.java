@@ -41,17 +41,16 @@ public class RegisterController {
 
     }
 
-
     @PostMapping
     public String register(@RequestParam String username,
                            @RequestParam String password,
                            @RequestParam String name,
                            @RequestParam String surname,
 //                           @RequestParam Role role,
-                           Model model){
+                           Model model) {
         try {
             this.userService.register(username, password, name, surname, Role.ROLE_USER);
-        }catch (PasswordDoNotMatchException | InvalidArgumentsException | UserNameExistsException exception){
+        } catch (PasswordDoNotMatchException | InvalidArgumentsException | UserNameExistsException exception) {
             return "redirect:/register?error=" + exception.getMessage();
         }
 
@@ -70,12 +69,12 @@ public class RegisterController {
     }
 
     @GetMapping
-    public String getRegisterPage(@RequestParam(required = false) String error, Model model){
-        if(error != null && !error.isEmpty()){
+    public String getRegisterPage(@RequestParam(required = false) String error, Model model) {
+        if (error != null && !error.isEmpty()) {
             model.addAttribute("hasError", true);
-            model.addAttribute("error",error);
+            model.addAttribute("error", error);
         }
-        model.addAttribute("bodyContent","register");
+        model.addAttribute("bodyContent", "register");
         return "master-details";
     }
 }

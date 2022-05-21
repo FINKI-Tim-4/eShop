@@ -13,7 +13,7 @@ import java.util.List;
 
 @Controller
 @RequestMapping("/wishlist")
-public class WishlistController{
+public class WishlistController {
 
     private final WishlistService wishlistService;
     private final AuthService authService;
@@ -24,31 +24,30 @@ public class WishlistController{
     }
 
     @GetMapping
-    public String getWishlistPage(Model model){
-        if(this.authService.getCurrentUser() instanceof String) return "redirect:/login?error=Please, login first";
+    public String getWishlistPage(Model model) {
+        if (this.authService.getCurrentUser() instanceof String) return "redirect:/login?error=Please, login first";
         Wishlist wishlist = this.wishlistService.findByUsername(this.authService.getCurrentUserId());
         List<Product> products = wishlist.getProductList();
         model.addAttribute("products", products);
-        model.addAttribute("bodyContent","wishlist");
+        model.addAttribute("bodyContent", "wishlist");
         return "master-details";
     }
 
     @PostMapping("/add-product/{productId}")
-    public String addProductToWishlist(@PathVariable Long productId){
-        if(this.authService.getCurrentUser() instanceof String) return "redirect:/login?error=Please, login first";
+    public String addProductToWishlist(@PathVariable Long productId) {
+        if (this.authService.getCurrentUser() instanceof String) return "redirect:/login?error=Please, login first";
         String username = this.authService.getCurrentUserId();
         try {
             this.wishlistService.addProductToWishlist(username, productId);
             return "redirect:/products";
-        }catch (ProductIsAlreadyInWishlistException ex){
+        } catch (ProductIsAlreadyInWishlistException ex) {
             return "redirect:/products?error=" + ex.getMessage();
         }
     }
 
     @PostMapping("/delete/{productId}")
-    public String deleteProduct(@PathVariable Long productId){
-        this.wishlistService.deleteProduct(this.authService.getCurrentUserId(),productId);
+    public String deleteProduct(@PathVariable Long productId) {
+        this.wishlistService.deleteProduct(this.authService.getCurrentUserId(), productId);
         return "redirect:/wishlist";
     }
-
 }

@@ -42,33 +42,32 @@ public class ProductController {
         this.orderService = orderService;
     }
 
-    @GetMapping({"","/{category}"})
+    @GetMapping({"", "/{category}"})
     public String getProductsPage(@RequestParam(required = false) String error,
                                   @RequestParam(required = false) String sort,
                                   @PathVariable(required = false) String category,
                                   @RequestParam(required = false) String state,
                                   @RequestParam(required = false) Integer page,
                                   Model model) {
-        if(error!=null){
+        if (error != null) {
             model.addAttribute("hasError", true);
             model.addAttribute("error", error);
         }
 
-        if(sort == null){
+        if (sort == null) {
             model.addAttribute("sorting", "created-descending");
             sort = "created-descending";
-        }
-        else
+        } else
             model.addAttribute("sorting", sort);
 
-        if(page == null){
+        if (page == null) {
             page = 0;
         }
         model.addAttribute("page", page);
 
         List<Product> products = sorted(sort, category, page, model);
 
-        model.addAttribute("state",state);
+        model.addAttribute("state", state);
 
         addToModel(model, products);
 
@@ -79,11 +78,10 @@ public class ProductController {
 
     private void temelkovkiTEST(Model model) {
         //test
-        try  {
+        try {
             ShoppingCart shoppingCart = this.shoppingCartService.findByUsernameAndStatus(this.authService.getCurrentUserId(), CartStatus.CREATED);
             model.addAttribute("size", shoppingCart.getProducts().size());
-        }
-        catch(RuntimeException ex) {
+        } catch (RuntimeException ex) {
             model.addAttribute("size", 0);
 
         }//test
@@ -118,7 +116,7 @@ public class ProductController {
                                 @RequestParam String description,
                                 @RequestParam MultipartFile image) throws IOException {
         Product product = productService.findById(id);
-        if(product!=null)
+        if (product != null)
             productService.editProduct(id, name, size, price, category, description, image);
         else {
             productService.save(name, size, price, category, description, image);
@@ -152,22 +150,27 @@ public class ProductController {
     private List<Product> sorted(String sort, String category, Integer pagee, Model model) {
         Pageable page = null;
 
-        switch (sort){
+        switch (sort) {
             case "price-ascending":
-                page = PageRequest.of(pagee, 6, Sort.by("price")); break;
+                page = PageRequest.of(pagee, 6, Sort.by("price"));
+                break;
             case "price-descending":
-                page = PageRequest.of(pagee, 6, Sort.by("price").descending()); break;
+                page = PageRequest.of(pagee, 6, Sort.by("price").descending());
+                break;
             case "title-ascending":
-                page = PageRequest.of(pagee, 6, Sort.by("name")); break;
+                page = PageRequest.of(pagee, 6, Sort.by("name"));
+                break;
             case "title-descending":
-                page = PageRequest.of(pagee, 6, Sort.by("name").descending()); break;
+                page = PageRequest.of(pagee, 6, Sort.by("name").descending());
+                break;
             case "created-descending":
-                page = PageRequest.of(pagee, 6, Sort.by("createAt").descending()); break;
+                page = PageRequest.of(pagee, 6, Sort.by("createAt").descending());
+                break;
             case "created-ascending":
                 page = PageRequest.of(pagee, 6, Sort.by("createAt"));
         }
 
-        if(category == null)
+        if (category == null)
             category = "all";
 
         List<Product> lista = null;
@@ -224,27 +227,27 @@ public class ProductController {
                 model.addAttribute("pages", productPage.getTotalPages());
                 return productPage.get().collect(Collectors.toList());
             case "Trousers":
-                productPage =  this.productService.findAllByCategory("Trousers", page);
+                productPage = this.productService.findAllByCategory("Trousers", page);
                 model.addAttribute("pages", productPage.getTotalPages());
                 return productPage.get().collect(Collectors.toList());
             case "Jeans":
-                productPage =  this.productService.findAllByCategory("Jeans", page);
+                productPage = this.productService.findAllByCategory("Jeans", page);
                 model.addAttribute("pages", productPage.getTotalPages());
                 return productPage.get().collect(Collectors.toList());
             case "Skirts":
-                productPage =  this.productService.findAllByCategory("Skirts", page);
+                productPage = this.productService.findAllByCategory("Skirts", page);
                 model.addAttribute("pages", productPage.getTotalPages());
                 return productPage.get().collect(Collectors.toList());
             case "Earrings":
-                productPage =  this.productService.findAllByCategory("Earrings", page);
+                productPage = this.productService.findAllByCategory("Earrings", page);
                 model.addAttribute("pages", productPage.getTotalPages());
                 return productPage.get().collect(Collectors.toList());
             case "Bags":
-                productPage =  this.productService.findAllByCategory("Bags", page);
+                productPage = this.productService.findAllByCategory("Bags", page);
                 model.addAttribute("pages", productPage.getTotalPages());
                 return productPage.get().collect(Collectors.toList());
             case "Dresses":
-                productPage =  this.productService.findAllByCategory("Dresses", page);
+                productPage = this.productService.findAllByCategory("Dresses", page);
                 model.addAttribute("pages", productPage.getTotalPages());
                 return productPage.get().collect(Collectors.toList());
         }

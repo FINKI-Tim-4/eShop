@@ -7,7 +7,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 public class EmailController {
-
     private final EmailService emailService;
 
     public EmailController(EmailService emailService) {
@@ -15,7 +14,7 @@ public class EmailController {
     }
 
     @PostMapping("/email")
-    public String sendEmail(@RequestParam String email){
+    public String sendEmail(@RequestParam String email) {
         this.emailService.subscribe(email);
         this.emailService.sendSimpleMessage(email, "Subscription", "You are successfully subscribed to our mail service");
         return "redirect:/products";

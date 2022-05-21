@@ -14,9 +14,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
-@RequestMapping({"","/home"})
+@RequestMapping({"", "/home"})
 public class HomeController {
-
     private final CategoryService categoryService;
     private final ShoppingCartService shoppingCartService;
     private final AuthService authService;
@@ -30,13 +29,12 @@ public class HomeController {
     }
 
     @GetMapping
-    public String home(Model model){
+    public String home(Model model) {
         //test
-       try  {
+        try {
             ShoppingCart shoppingCart = this.shoppingCartService.findByUsernameAndStatus(this.authService.getCurrentUserId(), CartStatus.CREATED);
             model.addAttribute("size", shoppingCart.getProducts().size());
-        }
-        catch(RuntimeException ex) {
+        } catch (RuntimeException ex) {
             model.addAttribute("size", 0);
         }//test
         model.addAttribute("ordersSize", this.orderService.findAllNewOrders().size());

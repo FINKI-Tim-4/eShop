@@ -13,12 +13,11 @@ import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
 import java.util.List;
 
-
 @Controller
 @RequestMapping("/shopping-cart")
 public class ShoppingCartController {
 
-    private  final CategoryService categoryService;
+    private final CategoryService categoryService;
     private final ShoppingCartService shoppingCartService;
     private final ProductService productService;
     private final OrderService orderService;
@@ -35,13 +34,13 @@ public class ShoppingCartController {
     }
 
     @GetMapping
-    public String getShoppingCartPage(Model model, HttpServletRequest request){
-        if(this.authService.getCurrentUser() instanceof String) return "redirect:/login?error=Please, login first";
-        if(this.authService.getCurrentUser()==null) return "redirect:/products?error=";
+    public String getShoppingCartPage(Model model, HttpServletRequest request) {
+        if (this.authService.getCurrentUser() instanceof String) return "redirect:/login?error=Please, login first";
+        if (this.authService.getCurrentUser() == null) return "redirect:/products?error=";
         String username = this.authService.getCurrentUserId();
 
         ShoppingCart shoppingCart = this.shoppingCartService
-                .findByUsernameAndStatus(username,CartStatus.CREATED);
+                .findByUsernameAndStatus(username, CartStatus.CREATED);
 
         shoppingCart.setCost((double) shoppingCart.getProducts().stream().mapToDouble(Product::getPrice).sum());
         this.shoppingCartService.save(shoppingCart);
@@ -52,8 +51,8 @@ public class ShoppingCartController {
         //test
 
         model.addAttribute("shoppingcart", shoppingCart);
-        model.addAttribute("username",this.authService.getCurrentUserId());
-        model.addAttribute("bodyContent","shopping-cart");
+        model.addAttribute("username", this.authService.getCurrentUserId());
+        model.addAttribute("bodyContent", "shopping-cart");
 
         model.addAttribute("categories", this.categoryService.findAll());
         model.addAttribute("tops", this.categoryService.findAllBySuperCategoryName("TOPS"));
@@ -65,12 +64,12 @@ public class ShoppingCartController {
 
     @PostMapping("/add-product/{id}")
     public String addProductToShoppingCart(@PathVariable Long id) {
-        if(this.authService.getCurrentUser() instanceof String) return "redirect:/login?error=Please, login first";
+        if (this.authService.getCurrentUser() instanceof String) return "redirect:/login?error=Please, login first";
         String username = this.authService.getCurrentUserId();
         try {
             this.shoppingCartService.addProductToShoppingCart(username, id);
             return "redirect:/shopping-cart";
-        }catch (ProductIsAlreadyInShoppingCartException ex){
+        } catch (ProductIsAlreadyInShoppingCartException ex) {
             return "redirect:/products?error=" + ex.getMessage();
         }
     }
@@ -87,21 +86,21 @@ public class ShoppingCartController {
         Product product = this.productService.findById(id);
         product.setStock(true);
         this.productService.save(product);
-        products.removeIf(product1 -> product1.getId()==id);
+        products.removeIf(product1 -> product1.getId() == id);
 
         this.shoppingCartService.save(shoppingCart);
         return "redirect:/shopping-cart";
     }
 
     @PostMapping("/clean")
-    public String cleanShoppingCart(){
+    public String cleanShoppingCart() {
         String username = this.authService.getCurrentUserId();
         ShoppingCart shoppingCart = this.shoppingCartService
                 .findByUsernameAndStatus(username, CartStatus.CREATED);
         shoppingCart.getProducts().forEach(product -> {
-            product.setStock(true);
-            this.productService.save(product);
-        }
+                    product.setStock(true);
+                    this.productService.save(product);
+                }
         );
         shoppingCart.setProducts(new ArrayList<>());
         this.shoppingCartService.save(shoppingCart);
