@@ -1,0 +1,19 @@
+<th:block xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/xhtml">
+    <div>
+        <form method="POST" th:action="@{/admin/profit}">
+        <select class="form-control"
+                name="year"
+                th:selected="${year}">
+            <option>2021</option>
+            <option>2022</option>
+            <option>2023</option>
+        </select>
+            <button>Show statistics</button>
+        </form>
+    </div>
+    <div>
+        <form method="GET" th:action="@{/admin/orders}">
+            <button>Orders</button>
+        </form>
+    </div>
+</th:block>

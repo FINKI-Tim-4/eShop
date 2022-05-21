@@ -1,0 +1,125 @@
+<th:block xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/xhtml">
+<header xmlns:sec="http://www.w3.org/1999/xhtml">
+
+    <nav class="navbar fixed-top  navbar-expand-lg navbar-dark bg-dark">
+        <div class="container-fluid">
+            <a class="navbar-brand" onclick="location.href='/home';" href="/home">eShop</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse " id="navbarSupportedContent">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="/home">Home</a>
+                    </li>
+<!--                    <li class="nav-item">-->
+<!--                        <a class="nav-link" href="/products"></a>-->
+<!--                    </li>-->
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="/products" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            Products
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <li><a class="dropdown-item" href="/products/all">ALL PRODUCTS</a></li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li><a class="dropdown-item" href="/products/top">TOP</a>
+                            <ul>
+                                <li th:each="top : ${tops}">
+                                    <a  class="dropdown-item" th:text="${top.name}" th:href="@{'/products/'+${top.name}}"></a></li>
+                            </ul>
+                            </li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li><a class="dropdown-item" href="/products/bottom">BOTTOM</a>
+                                <ul>
+                                    <li th:each="bottom : ${bottoms}">
+                                        <a  class="dropdown-item" th:text="${bottom.name}" th:href="@{'/products/'+${bottom.name}}"></a>
+                                    </li>
+                                </ul>
+                            </li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li><a class="dropdown-item" href="/products/accessories">ACCESSORIES</a>
+                                <ul>
+                                    <li th:each="acc : ${accessories}">
+                                        <a  class="dropdown-item" th:text="${acc.name}" th:href="@{'/products/'+${acc.name}}"></a>
+                                    </li>
+                                </ul>
+                            </li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li><a class="dropdown-item" href="/products/collections">COLLECTIONS</a>
+                                <ul>
+                                    <li th:each="coll : ${collections}">
+                                        <a  class="dropdown-item" th:text="${coll.name}" th:href="@{'/products/'+${coll.name}}"></a>
+                                    </li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </li>
+                    <li sec:authorize="${hasRole('ROLE_ADMIN')}" class="nav-item">
+                        <a class="nav-link" href="/categories">Categories</a>
+                    </li>
+                    <li class="nav-item dropdown" sec:authorize="${hasRole('ROLE_ADMIN')}">
+                        <a class="nav-link dropdown-toggle "  id="navbarDropdown2" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            ADMIN
+                            <span th:if="${ordersSize > 0}" class="badge1" >-</span>
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown2">
+                            <a class="dropdown-item " href="/admin/new-orders">New orders
+                            <div th:if="${ordersSize > 0}" th:text="${ordersSize}" class="badge bg-danger"></div></a>
+                            <a class="dropdown-item" href="/admin/confirmed-orders">Confirmed orders</a>
+                            <a class="dropdown-item" href="/admin/completed-orders">Completed orders</a>
+                            <a class="dropdown-item" href="/admin/profit">Profit</a>
+                        </ul>
+                    </li>
+                </ul>
+                <form  class="d-flex">
+                    <button onclick="location.href='/shopping-cart';" type="button" class="btn btn-outline-success  me-2 mb-2 mb-lg-0 ">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-bag-fill" viewBox="0 0 16 16">
+                            <path d="M8 1a2.5 2.5 0 0 1 2.5 2.5V4h-5v-.5A2.5 2.5 0 0 1 8 1zm3.5 3v-.5a3.5 3.5 0 1 0-7 0V4H1v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V4h-3.5z"></path>
+                        </svg>
+                        Cart
+                        <div th:if="${size > 0}" th:text="${size}" id="badgeCart" class="badge bg-secondary bg-success"></div>
+                    </button>
+                </form>
+                <div class="nav-item dropdown" sec:authorize="isAuthenticated()">
+
+                    <a class="nav-link dropdown-toggle "  id="navbarDropdown3" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+<!--                        <span th:text="${session.user.getUsername()}"></span>-->
+                        (USERNAME)
+<!--                        <span th:if="${ordersSize > 0}" class="badge1" >-</span>-->
+                    </a>
+                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown3">
+                        <li>
+                        <a class="dropdown-item " href="/user">Profile</a>
+                        </li>
+                        <li>
+                            <a class="dropdown-item" href="/wishlist">Wishlist</a>
+                        </li>
+<!--                            <div th:if="${ordersSize > 0}" th:text="${ordersSize}" class="badge bg-danger"></div>-->
+                        <li>
+                        <a class="dropdown-item" href="/user/all-orders">My orders</a>
+                        </li>
+                            <ul>
+                            <li>
+                            <a class="dropdown-item" href="/user/active-orders">Active orders</a>
+                            </li>
+                            <li>
+                            <a class="dropdown-item" href="/user/completed-orders">Completed orders</a>
+                            </li>
+                        </ul>
+
+                    </ul>
+
+                </div>
+
+                <div class="d-flex" sec:authorize="!isAuthenticated()">
+                    <a href="/login" class="btn btn-outline-warning" type="submit">Login</a>
+                </div>
+                <div class="d-flex" sec:authorize="isAuthenticated()">
+                    <a href="/logout" class="btn btn-outline-warning" type="submit">Logout</a>
+                </div>
+            </div>
+            </div>
+        </div>
+    </nav>
+</header>
+</th:block>
