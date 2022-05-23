@@ -1,10 +1,11 @@
 <th:block xmlns:th="http://www.thymeleaf.org">
     <main class="flex-shrink-0">
-        <div class="container">
+        <div class="container" style="width: 500px">
             <div class="row">
                 <form method="POST" th:action="@{'/products/product/{id}' (id=${product?.id})}"
                       enctype="multipart/form-data">
                     <div class="form-group mb-2 mt-2">
+
                         <label for="name">Name: </label>
                         <input class="form-control"
                                type="text"
@@ -57,15 +58,14 @@
                     <div class="form-group mb-2">
                         <input name="image" id="image" type="file" accept="image/png, image/jpeg"/>
                     </div>
+                    <br>
+                    <div class="d-flex justify-content-between align-items-center">
 
-                    <div class="form-group mb-2">
-                        <button class="btn btn-warning">Submit</button>
+                            <a id="back" href="/products" type="button" class="btn btn-outline-primary">Back to products</a>
+                            <button class="btn btn-success">Submit</button>
+
                     </div>
 
-                    <div class="form-group mb-2">
-
-                        <a id="back" href="/products" type="button" class="btn btn-info">Back to products</a>
-                    </div>
                 </form>
             </div>
         </div>
