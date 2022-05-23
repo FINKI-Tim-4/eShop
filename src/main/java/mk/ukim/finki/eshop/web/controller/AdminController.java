@@ -37,14 +37,13 @@ public class AdminController {
     }
 
     @GetMapping
-    public String getProfitForYear(Model model){
+    public String getProfitForYear(Model model) {
 
 
         try {
             ShoppingCart shoppingCart = this.shoppingCartService.findByUsernameAndStatus(this.authService.getCurrentUserId(), CartStatus.CREATED);
             model.addAttribute("size", shoppingCart.getProducts().size());
-        }
-        catch(RuntimeException ex) {
+        } catch (RuntimeException ex) {
             model.addAttribute("size", 0);
         }//test
         model.addAttribute("ordersSize", this.orderService.findAllNewOrders().size());
@@ -54,11 +53,11 @@ public class AdminController {
     }
 
     @PostMapping("/profit")
-    public String getProfitForYear(@RequestParam(required = false) int year, Model model){
+    public String getProfitForYear(@RequestParam(required = false) int year, Model model) {
         List<Double> profitPerMonth = this.onlineShopService.profitForYearPerMonths(year);
-        model.addAttribute("perMonth",this.onlineShopService.mapYearly(year));
+        model.addAttribute("perMonth", this.onlineShopService.mapYearly(year));
         model.addAttribute("perYear", profitPerMonth.stream().mapToDouble(Double::doubleValue).sum());
-        model.addAttribute("year",year);
+        model.addAttribute("year", year);
         model.addAttribute("total", this.onlineShopService.totalProfit());
         model.addAttribute("ordersSize", this.orderService.findAllNewOrders().size());
         model.addAttribute("bodyContent", "statistics");
@@ -66,11 +65,11 @@ public class AdminController {
     }
 
     @GetMapping("/profit")
-    public String getProfit(Model model){
+    public String getProfit(Model model) {
         List<Double> profitPerMonth = this.onlineShopService.profitForYearPerMonths(LocalDateTime.now().getYear());
-        model.addAttribute("perMonth",this.onlineShopService.mapYearly(LocalDateTime.now().getYear()));
+        model.addAttribute("perMonth", this.onlineShopService.mapYearly(LocalDateTime.now().getYear()));
         model.addAttribute("perYear", profitPerMonth.stream().mapToDouble(Double::doubleValue).sum());
-        model.addAttribute("year",LocalDateTime.now().getYear());
+        model.addAttribute("year", LocalDateTime.now().getYear());
         model.addAttribute("total", this.onlineShopService.totalProfit());
         model.addAttribute("ordersSize", this.orderService.findAllNewOrders().size());
         model.addAttribute("bodyContent", "statistics");
@@ -79,7 +78,7 @@ public class AdminController {
 
 
     @GetMapping("/new-orders")
-    public String getNewOrders(Model model){
+    public String getNewOrders(Model model) {
         model.addAttribute("ordersSize", this.orderService.findAllNewOrders().size());
         model.addAttribute("orders", this.orderService
                 .findAllNewOrders());
@@ -88,7 +87,7 @@ public class AdminController {
     }
 
     @GetMapping("/confirmed-orders")
-    public String getDeliveredOrders(Model model){
+    public String getDeliveredOrders(Model model) {
         model.addAttribute("ordersSize", this.orderService.findAllNewOrders().size());
         model.addAttribute("orders", this.orderService
                 .findAllByStatus(OrderStatus.DELIVERY_ON_PROCESS));
@@ -97,7 +96,7 @@ public class AdminController {
     }
 
     @GetMapping("/completed-orders")
-    public String getOrders(Model model){
+    public String getOrders(Model model) {
         model.addAttribute("ordersSize", this.orderService.findAllNewOrders().size());
         model.addAttribute("orders", this.orderService
                 .findAllByStatus(OrderStatus.COMPLETED)

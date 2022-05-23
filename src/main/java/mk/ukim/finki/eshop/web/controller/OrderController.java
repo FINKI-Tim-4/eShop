@@ -35,14 +35,14 @@ public class OrderController {
     }
 
     @GetMapping("/make-order")
-    public String submitOrder(Model model){
+    public String submitOrder(Model model) {
         ShoppingCart shoppingCart = this.shoppingCartService
                 .findByUsernameAndStatus(this.authService.getCurrentUserId(), CartStatus.CREATED);
         //test
         model.addAttribute("size", shoppingCart.getProducts().size());
         model.addAttribute("ordersSize", this.orderService.findAllNewOrders().size());
         //test
-        model.addAttribute("products",shoppingCart.getProducts());
+        model.addAttribute("products", shoppingCart.getProducts());
         model.addAttribute("bodyContent", "submit-order");
         return "master-details";
     }
@@ -53,11 +53,11 @@ public class OrderController {
                              @RequestParam String address,
                              @RequestParam String email,
                              @RequestParam String phoneNumber,
-                             @RequestParam String payType){
+                             @RequestParam String payType) {
         ShoppingCart shoppingCart = this.shoppingCartService
                 .findByUsernameAndStatus(this.authService.getCurrentUserId(), CartStatus.CREATED);
         Order order = new Order(this.authService.getCurrentUserId(),
-                name,surname,address,email,phoneNumber);
+                name, surname, address, email, phoneNumber);
         order.setProducts(shoppingCart.getProducts());
         order.setTotal(order.getProducts().stream().mapToDouble(Product::getPrice).sum());
         shoppingCart.setProducts(new ArrayList<>());
@@ -65,16 +65,15 @@ public class OrderController {
         GeneratePdf generatePdf = new GeneratePdf(orderService);
         orderService.save(order);
         generatePdf.orderReport(order);
-        emailService.sendMessageWithAttachment(order.getEmail(),"TEST","test",order.getOrderNumber());
-        if(payType.equals("card")){
+        emailService.sendMessageWithAttachment(order.getEmail(), "TEST", "test", order.getOrderNumber());
+        if (payType.equals("card")) {
             Long number = order.getOrderNumber();
             return "redirect:/checkout/" + number;
-        }
-        else return "redirect:/user/active-orders";
+        } else return "redirect:/user/active-orders";
     }
 
     @PostMapping("/confirm-order/{number}")
-    public String confirmOrder(@PathVariable Long number){
+    public String confirmOrder(@PathVariable Long number) {
         Order order = this.orderService.findByOrderNumber(number);
         order.setOrderStatus(OrderStatus.DELIVERY_ON_PROCESS);
         this.orderService.save(order);
@@ -82,7 +81,7 @@ public class OrderController {
     }
 
     @PostMapping("/completed-order/{number}")
-    public String completedOrder(@PathVariable Long number){
+    public String completedOrder(@PathVariable Long number) {
         Order order = this.orderService.findByOrderNumber(number);
         order.setOrderStatus(OrderStatus.COMPLETED);
         this.orderService.save(order);
@@ -90,15 +89,14 @@ public class OrderController {
     }
 
     @PostMapping("/cancel-order/{number}")
-    public String cancelOrder(@PathVariable Long number){
+    public String cancelOrder(@PathVariable Long number) {
         this.orderService.cancelOrder(number);
         return "redirect:/admin/new-orders";
     }
 
     @PostMapping("/shopping-cart/cancel-order/{number}")
-    public String cancelOrderUser(@PathVariable Long number){
+    public String cancelOrderUser(@PathVariable Long number) {
         this.orderService.cancelOrder(number);
         return "redirect:/user/all-orders";
     }
-
 }

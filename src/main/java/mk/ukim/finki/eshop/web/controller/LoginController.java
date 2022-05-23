@@ -21,7 +21,6 @@ import javax.servlet.http.HttpServletRequest;
 @Controller
 @RequestMapping("/login")
 public class LoginController {
-
     private final PasswordEncoder passwordEncoder;
     private final ShoppingCartService shoppingCartService;
     private final AuthService authService;
@@ -41,7 +40,7 @@ public class LoginController {
 
     @GetMapping
     public String getLoginPage(Model model, @RequestParam(required = false) String error) {
-        if(error!=null){
+        if (error != null) {
             model.addAttribute("hasError", true);
             model.addAttribute("error", error);
         }
@@ -57,16 +56,16 @@ public class LoginController {
     }
 
     @PostMapping
-    public String login(HttpServletRequest request, Model model){
+    public String login(HttpServletRequest request, Model model) {
         User user;
         try {
             user = this.authService.login(request.getParameter("username")
-                    ,request.getParameter("password"));
+                    , request.getParameter("password"));
             request.getSession().setAttribute("user", user);
             return "redirect:/products";
-        } catch (InvalidUserCredentialsException exception){
+        } catch (InvalidUserCredentialsException exception) {
             model.addAttribute("error", exception.getMessage());
-            model.addAttribute("bodyContent","login");
+            model.addAttribute("bodyContent", "login");
             return "master-details";
         }
     }

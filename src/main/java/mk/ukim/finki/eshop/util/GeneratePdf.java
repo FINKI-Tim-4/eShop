@@ -6,7 +6,7 @@ import com.itextpdf.text.log.LoggerFactory;
 import com.itextpdf.text.pdf.PdfPCell;
 import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
-import lombok.var;
+import java.util.List;
 import mk.ukim.finki.eshop.model.Order;
 import mk.ukim.finki.eshop.model.Product;
 import mk.ukim.finki.eshop.service.OrderService;
@@ -15,7 +15,6 @@ import java.io.*;
 
 public class GeneratePdf {
     private static final Logger logger = LoggerFactory.getLogger(GeneratePdf.class);
-
 
     private final OrderService orderService;
 
@@ -54,11 +53,11 @@ public class GeneratePdf {
             hcell.setHorizontalAlignment(Element.ALIGN_CENTER);
             table.addCell(hcell);
 
-            var productList = order.getProducts();
+            List<Product> productList = order.getProducts();
 
             PdfPCell cell;
 
-            for ( Product product : productList) {
+            for (Product product : productList) {
 
                 cell = new PdfPCell(new Phrase(String.valueOf(product.getId())));
                 cell.setVerticalAlignment(Element.ALIGN_MIDDLE);

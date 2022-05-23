@@ -38,7 +38,8 @@
                             <td th:text="${product.category?.name}">product category</td>
                             <td th:text="${product.description}">product description</td>
                             <td>
-                                <form method="POST" th:action="@{'/shopping-cart/{id}/remove-product' (id=${product.id})}">
+                                <form method="POST"
+                                      th:action="@{'/shopping-cart/{id}/remove-product' (id=${product.id})}">
                                     <button class="btn btn-sm btn-danger">Delete</button>
                                 </form>
                             </td>
@@ -47,7 +48,7 @@
                             <td th:text="${shoppingcart.cost}">total price</td>
                             <td>
                                 <form method="GET" th:action="@{/make-order}">
-                                <button>Make order</button>
+                                    <button>Make order</button>
                                 </form>
                             </td>
                             <td>

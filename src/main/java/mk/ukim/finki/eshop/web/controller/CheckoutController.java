@@ -17,8 +17,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 
 @Controller
 public class CheckoutController {
-
-
     private final String stripePublicKey = "pk_test_51GtaiIC20OSy2aehzeih7APgwNObHZA7JVX5kwEkhq8iIdY2AmIJX07ic7yRY8kUERSJ4MzM3H3Ej5QokIhF2Ifm00FlCr2z1x";
 
     private final ShoppingCartService shoppingCartService;
@@ -51,7 +49,7 @@ public class CheckoutController {
     }
 
     @PostMapping("/charge")
-    public String checkout(ChargeRequest chargeRequest){
+    public String checkout(ChargeRequest chargeRequest) {
         try {
             this.shoppingCartService.checkoutShoppingCart(this.authService.getCurrentUserId(), chargeRequest);
             return "redirect:/products?message=Successful Payment";

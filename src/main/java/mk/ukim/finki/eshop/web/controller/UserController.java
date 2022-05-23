@@ -19,39 +19,36 @@ public class UserController {
         this.authService = authService;
     }
 
-
     @GetMapping
-    public String getProfile(Model model){
-        model.addAttribute("bodyContent","profile");
+    public String getProfile(Model model) {
+        model.addAttribute("bodyContent", "profile");
         return "master-details";
     }
 
     @GetMapping("/all-orders")
-    public String getAllOrders(Model model){
-        model.addAttribute("ordersType","All");
+    public String getAllOrders(Model model) {
+        model.addAttribute("ordersType", "All");
         model.addAttribute("username", this.authService.getCurrentUserId());
         model.addAttribute("orders", this.userService.findAllByUsername(this.authService.getCurrentUserId()));
-        model.addAttribute("bodyContent","user-orders");
+        model.addAttribute("bodyContent", "user-orders");
         return "master-details";
     }
 
     @GetMapping("/active-orders")
-    public String getActiveOrders(Model model){
-        model.addAttribute("ordersType","Active");
+    public String getActiveOrders(Model model) {
+        model.addAttribute("ordersType", "Active");
         model.addAttribute("username", this.authService.getCurrentUserId());
         model.addAttribute("orders", this.userService.findAllActiveOrders(this.authService.getCurrentUserId()));
-        model.addAttribute("bodyContent","user-orders");
+        model.addAttribute("bodyContent", "user-orders");
         return "master-details";
     }
 
     @GetMapping("/completed-orders")
-    public String getCompletedOrders(Model model){
-        model.addAttribute("ordersType","Completed");
+    public String getCompletedOrders(Model model) {
+        model.addAttribute("ordersType", "Completed");
         model.addAttribute("username", this.authService.getCurrentUserId());
         model.addAttribute("orders", this.userService.findAllCompletedOrders(this.authService.getCurrentUserId()));
-        model.addAttribute("bodyContent","user-orders");
+        model.addAttribute("bodyContent", "user-orders");
         return "master-details";
     }
-
-
 }
