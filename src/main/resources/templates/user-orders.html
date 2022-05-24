@@ -21,7 +21,6 @@
                         <thead>
                         <th>Image</th>
                         <th>Name</th>
-                        <th>Size</th>
                         <th>Price</th>
                         <th>Category</th>
                         <th>Description</th>
@@ -30,13 +29,11 @@
                         <tr th:each="product : ${order.products}">
                             <td><img class="img-thumbnail" th:src="${product.base64Image}" width="100"></td>
                             <td th:text="${product.name}">product name</td>
-                            <td th:text="${product.size}">product size</td>
                             <td th:text="'$'+${product.price}">product price</td>
                             <td th:text="${product.category?.name}">product category</td>
                             <td th:text="${product.description}">product description</td>
                         </tr>
                         <tr>
-                            <td>ORDER DETAILS</td>
                             <td>Name:
                                 <th:block th:text="${order.name}"></th:block>
                             </td>
