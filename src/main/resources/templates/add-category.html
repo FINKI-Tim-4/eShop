@@ -1,0 +1,41 @@
+<th:block xmlns:th="http://www.thymeleaf.org">
+    <main class="flex-shrink-0">
+        <div class="container" style="width: 500px">
+            <div style="width: 500px">
+                <form method="POST" th:action="@{'/categories/add'}" enctype="multipart/form-data">
+                    <div class="form-group mb-2 mt-2">
+                        <label for="name">Name: </label>
+<!--                        <input class="form-control"-->
+<!--                               type="text"-->
+<!--                               name="name"-->
+<!--                               >-->
+                    </div>
+                    <div class="form-group mb-2 mt-2">
+                        <input class="form-control"
+                               type="text"
+                               name="name"
+                               id="name"
+                               th:value="${category?.name}">
+                    </div>
+                    <div class="form-group mb-2 mt-2">
+                        <label for="name">Main Category: </label>
+                    </div>
+                    <div>
+                        <select name="category" class="form-control">
+                            <option value=""></option>
+                            <option th:each="cat:${categories}"
+                                    th:if="${cat.superCategory==null}" th:text="${cat.name}"
+                                    th:value="${cat.name}"></option>
+                        </select>
+                    </div>
+                    <br>
+                    <div class="d-flex justify-content-between align-items-center">
+                        <a id="back" href="/categories" type="button" class="btn btn-outline-primary">Back to categories</a>
+                        <button class="btn btn-success">Submit</button>
+                    </div>
+
+                </form>
+            </div>
+        </div>
+    </main>
+</th:block>
