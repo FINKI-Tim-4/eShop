@@ -1,9 +1,9 @@
 package mk.ukim.finki.eshop.web.controller.pdf;
 
 import lombok.var;
-import mk.ukim.finki.deals_n_steals.model.Order;
-import mk.ukim.finki.deals_n_steals.service.OrderService;
-import mk.ukim.finki.deals_n_steals.util.GeneratePdf;
+import mk.ukim.finki.eshop.model.Order;
+import mk.ukim.finki.eshop.service.OrderService;
+import mk.ukim.finki.eshop.util.GeneratePdf;
 import org.springframework.core.io.InputStreamResource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
