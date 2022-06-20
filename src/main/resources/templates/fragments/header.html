@@ -97,16 +97,13 @@
 
                     <div class="nav-item dropdown" sec:authorize="isAuthenticated()">
 
-                        <a class="nav-link dropdown-toggle" id="navbarDropdown3" role="button"
-                           data-bs-toggle="dropdown" aria-expanded="false">
-                            <!--                        <span th:text="${session.user.getUsername()}"></span>-->
-                            (USERNAME)
-                            <!--                        <span th:if="${ordersSize > 0}" class="badge1" >-</span>-->
-                        </a>
+                        <ul class="navbar-nav">
+                            <a class="nav-link dropdown-toggle" style="color: rgba(255,255,255,.55);" id="navbarDropdown3" role="button"
+                               data-bs-toggle="dropdown" aria-expanded="false">
+                                More options 
+                            </a>
+                        </ul>
                         <ul class="dropdown-menu" aria-labelledby="navbarDropdown3">
-                            <li>
-                                <a class="dropdown-item " href="/user">Profile</a>
-                            </li>
                             <li>
                                 <a class="dropdown-item" href="/wishlist">Wishlist</a>
                             </li>
