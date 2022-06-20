@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 
 import java.io.ByteArrayInputStream;
 
+import lombok.var;
+
 @Controller
 public class PdfController {
     private final OrderService orderService;
